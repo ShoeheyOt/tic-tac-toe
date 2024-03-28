@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Square } from "./Square";
 
-export const TicTacTow = () => {
+const gameBoard: number[][] = new Array(3).fill(new Array(3).fill(null));
+
+export const TicTacToe = () => {
   const [isTurn, setIsTurn] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
   const [winner, setWinner] = useState("");
@@ -24,75 +26,13 @@ export const TicTacTow = () => {
   return (
     <>
       <p>{winner.length >= 1 && `${winner} wins!`}</p>
-      <div className="flex">
-        <Square
-          num={1}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={2}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={3}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-      </div>
-      <div className="flex">
-        <Square
-          num={4}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={5}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={6}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-      </div>
-      <div className="flex">
-        <Square
-          num={7}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={8}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-        <Square
-          num={9}
-          onChangeTurn={handleTurn}
-          isTurn={isTurn}
-          isFinished={isFinished}
-          onHandleGame={handleGame}
-        />
-      </div>
+      {gameBoard.map((row, i) => (
+        <div className="flex" key={i}>
+          {row.map((_, j) => (
+            <Square key={j} x={i} y={j} onChangeTurn={handleTurn} />
+          ))}
+        </div>
+      ))}
     </>
   );
 };

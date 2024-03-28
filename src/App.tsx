@@ -1,8 +1,8 @@
 import "./App.css";
-import { TicTacTow } from "./TicTacToe";
+import { TicTacToe } from "./TicTacToe";
 
 function App() {
-  return <TicTacTow />;
+  return <TicTacToe />;
 }
 
 export default App;

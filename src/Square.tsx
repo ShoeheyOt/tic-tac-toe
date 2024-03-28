@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { storeData2 } from "./store";
+import { storeData } from "./store";
 
 type OnChangeTurn = (e: React.MouseEvent<HTMLButtonElement>) => void;
 
@@ -28,7 +28,7 @@ export const Square = ({
           if (!clicked) {
             onChangeTurn(e);
             setClicked(true);
-            storeData2(x, y, isTurn, onHandleGame);
+            storeData(x, y, isTurn, onHandleGame);
           }
         }}
         disabled={isFinished}

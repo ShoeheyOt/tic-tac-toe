@@ -8,9 +8,9 @@ export const Square = ({
   y,
   onChangeTurn,
   isFinished,
-}: // onHandleGame,
-// isTurn,
-{
+  isTurn,
+  onHandleGame,
+}: {
   x: number;
   y: number;
   onChangeTurn: OnChangeTurn;
@@ -28,18 +28,11 @@ export const Square = ({
           if (!clicked) {
             onChangeTurn(e);
             setClicked(true);
-            storeData2(
-              x,
-              y
-              // isTurn, onHandleGame
-            );
+            storeData2(x, y, isTurn, onHandleGame);
           }
         }}
         disabled={isFinished}
-      >
-        x:{x}
-        y:{y}
-      </button>
+      ></button>
     </div>
   );
 };

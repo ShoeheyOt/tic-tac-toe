@@ -29,7 +29,15 @@ export const TicTacToe = () => {
       {gameBoard.map((row, i) => (
         <div className="flex" key={i}>
           {row.map((_, j) => (
-            <Square key={j} x={i} y={j} onChangeTurn={handleTurn} />
+            <Square
+              key={j}
+              x={i}
+              y={j}
+              onChangeTurn={handleTurn}
+              isFinished={isFinished}
+              onHandleGame={handleGame}
+              isTurn={isTurn}
+            />
           ))}
         </div>
       ))}

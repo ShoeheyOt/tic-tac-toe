@@ -5,24 +5,14 @@ const gameBoard: number[][] = new Array(3).fill(new Array(3).fill(null));
 
 export const TicTacToe = () => {
   const [isTurn, setIsTurn] = useState(true);
-  const [isFinished, setIsFinished] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [winner, setWinner] = useState("");
 
   const handleGame = (winner: string) => {
-    setIsFinished(true);
+    setIsClicked(true);
     setWinner(winner);
   };
 
-  const handleTurn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (isTurn) {
-      e.currentTarget.textContent = "O";
-      setIsTurn(false);
-    }
-    if (!isTurn) {
-      e.currentTarget.textContent = "X";
-      setIsTurn(true);
-    }
-  };
   return (
     <>
       <p>{winner.length >= 1 && `${winner} wins!`}</p>
@@ -31,11 +21,11 @@ export const TicTacToe = () => {
           {row.map((_, j) => (
             <Square
               key={j}
-              x={i}
-              y={j}
-              onChangeTurn={handleTurn}
-              isFinished={isFinished}
+              row={i}
+              column={j}
               onHandleGame={handleGame}
+              setIsTurn={setIsTurn}
+              isClicked={isClicked}
               isTurn={isTurn}
             />
           ))}

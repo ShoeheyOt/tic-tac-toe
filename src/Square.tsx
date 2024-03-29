@@ -1,23 +1,23 @@
 import { useState } from "react";
-import { storeData } from "./store";
+import { handleTurn } from "./store";
 
-type OnChangeTurn = (e: React.MouseEvent<HTMLButtonElement>) => void;
+interface ISquare {
+  row: number;
+  column: number;
+  onHandleGame: (winner: string) => void;
+  setIsTurn: React.Dispatch<React.SetStateAction<boolean>>;
+  isClicked: boolean;
+  isTurn: boolean;
+}
 
 export const Square = ({
-  x,
-  y,
-  onChangeTurn,
-  isFinished,
-  isTurn,
+  row,
+  column,
   onHandleGame,
-}: {
-  x: number;
-  y: number;
-  onChangeTurn: OnChangeTurn;
-  isFinished: boolean;
-  onHandleGame: (winner: string) => void;
-  isTurn: boolean;
-}) => {
+  setIsTurn,
+  isClicked,
+  isTurn,
+}: ISquare) => {
   const [clicked, setClicked] = useState(false);
 
   return (
@@ -26,12 +26,11 @@ export const Square = ({
         className="w-full h-full"
         onClick={(e) => {
           if (!clicked) {
-            onChangeTurn(e);
+            handleTurn(e, row, column, isTurn, onHandleGame, setIsTurn);
             setClicked(true);
-            storeData(x, y, isTurn, onHandleGame);
           }
         }}
-        disabled={isFinished}
+        disabled={isClicked}
       ></button>
     </div>
   );

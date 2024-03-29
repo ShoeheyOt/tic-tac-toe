@@ -6,7 +6,7 @@ interface ISquare {
   column: number;
   onHandleGame: (winner: string) => void;
   setIsTurn: React.Dispatch<React.SetStateAction<boolean>>;
-  isClicked: boolean;
+  isGameFinished: boolean;
   isTurn: boolean;
 }
 
@@ -15,7 +15,7 @@ export const Square = ({
   column,
   onHandleGame,
   setIsTurn,
-  isClicked,
+  isGameFinished,
   isTurn,
 }: ISquare) => {
   const [clicked, setClicked] = useState(false);
@@ -30,7 +30,7 @@ export const Square = ({
             setClicked(true);
           }
         }}
-        disabled={isClicked}
+        disabled={isGameFinished}
       ></button>
     </div>
   );

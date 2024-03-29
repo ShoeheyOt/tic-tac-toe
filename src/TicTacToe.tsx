@@ -5,11 +5,11 @@ const gameBoard: number[][] = new Array(3).fill(new Array(3).fill(null));
 
 export const TicTacToe = () => {
   const [isTurn, setIsTurn] = useState(true);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isGameFinished, setIsGameFinished] = useState(false);
   const [winner, setWinner] = useState("");
 
   const handleGame = (winner: string) => {
-    setIsClicked(true);
+    setIsGameFinished(true);
     setWinner(winner);
   };
 
@@ -25,7 +25,7 @@ export const TicTacToe = () => {
               column={j}
               onHandleGame={handleGame}
               setIsTurn={setIsTurn}
-              isClicked={isClicked}
+              isGameFinished={isGameFinished}
               isTurn={isTurn}
             />
           ))}

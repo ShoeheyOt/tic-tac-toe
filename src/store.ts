@@ -1,38 +1,56 @@
 interface IData {
-  O: number[];
-  X: number[];
+  O: { [propName: string]: number };
+  X: { [propName: string]: number };
 }
 
 const data: IData = {
-  O: [],
-  X: [],
+  O: {},
+  X: {},
 };
 
-const wins = [
-  [1, 2, 3],
-  [1, 4, 7],
-  [1, 5, 9],
-  [2, 5, 8],
-  [3, 6, 9],
-  [3, 5, 7],
-  [4, 5, 6],
-  [7, 8, 9],
-];
-
 export const storeData = (
-  num: number,
-  isTurn: boolean,
+  player: string,
+  row: number,
+  column: number,
   onHandleGame: (win: string) => void
 ) => {
+  const rowKey = `x-${row}`;
+  const columnKey = `y-${column}`;
+  const store = data[player as keyof IData];
+
+  Object.hasOwn(store, rowKey) ? store[rowKey]++ : (store[rowKey] = 1);
+  Object.hasOwn(store, columnKey) ? store[columnKey]++ : (store[columnKey] = 1);
+
+  row === column && storeBackSlash(store);
+  if (row === column && row === 1) storeSlash(store);
+  Math.abs(row - column) === 2 && storeSlash(store);
+  Object.values(store).includes(3) && onHandleGame(player);
+};
+
+const storeBackSlash = (turn: { [propName: string]: number }) => {
+  turn[`n-n`] ? (turn[`n-n`] = turn[`n-n`] + 1) : (turn[`n-n`] = 1);
+};
+
+const storeSlash = (turn: { [propName: string]: number }) => {
+  turn[`n-l`] ? (turn[`n-l`] = turn[`n-l`] + 1) : (turn[`n-l`] = 1);
+};
+
+export const handleTurn = (
+  e: React.MouseEvent<HTMLButtonElement>,
+  row: number,
+  column: number,
+  isTurn: boolean,
+  handleGame: (winner: string) => void,
+  setIsTurn: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   if (isTurn) {
-    data.O.push(num);
-    data.O.sort();
-  } else {
-    data.X.push(num);
-    data.X.sort();
+    e.currentTarget.textContent = "O";
+    storeData("O", row, column, handleGame);
+    setIsTurn(false);
   }
-  const resultO = wins.map((win) => win.every((num) => data.O.includes(num)));
-  const resultX = wins.map((win) => win.every((num) => data.X.includes(num)));
-  resultO.includes(true) && onHandleGame("O");
-  resultX.includes(true) && onHandleGame("X");
+  if (!isTurn) {
+    e.currentTarget.textContent = "X";
+    storeData("X", row, column, handleGame);
+    setIsTurn(true);
+  }
 };
